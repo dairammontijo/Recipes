@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Welcome</title>
+</head>
+
+<body>
+    <div class="text-center">
+        <div class="d-flex justify-content-between bg-dark text-light">
+            <h1 class="text-center text-warning">Welcome {{logged_in_chef.first_name}} {{logged_in_chef.last_name}}</h1>
+            <a href="/logout"><input type="submit" value="Log out" class="btn btn-warning"></a>
+
+        </div>
+        <div class="container">
+            <div class="row lg-auto p-6 mt-4">
+                <div class="col-md-8 offset-md-2">
+                    <h2 class="text-center bg-dark text-warning">All posted recipes</h2>
+                    <table class="table table-striped table-dark text-center">
+                        <tr>
+                            <th>Name</th>
+                            <th>Posted by</th>
+                            <th>Date made</th>
+                            <th>Under 30 mins?</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for one_recipe in all_the_recipes %}
+                        <tr>
+                            <td>{{one_recipe.name}}</td>
+                            <td>{{one_recipe.maker.first_name}}</td>
+                            <td>{{one_recipe.date_made.strftime('%m/%d/%Y')}}</td>
+                            <td>{{one_recipe.cooking_time}}</td>
+                            <td>
+                                <a href="/view_recipe/{{one_recipe.id}}">View</a>
+                                {% if logged_in_chef.id == one_recipe.maker.id %}
+                                <a href="/edit_recipe/{{one_recipe.id}}">Edit</a>
+                                <form action="/delete_recipe/{{one_recipe.id}}" method="post"> <input type="submit"
+                                        value="Delete Recipe" class="btn btn-danger"></form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a href="/add_recipe"><input type="submit" value="Create a recipe" class="btn btn-primary"></a>
+    </div>
+</body>
+
+</html>

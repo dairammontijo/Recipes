@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Edit Recipe</title>
+</head>
+
+<body>
+    <div class="d-flex justify-content-end">
+        <a href="/logout"><input type="submit" value="Log out" class="btn btn-warning"></a>
+    </div>
+    <div class="container">
+        <div class="row m-auto p-4 mt-4"">
+            <div class="col-md-4 jumbotron offset-md-4">
+                <form action="/update_recipe/{{the_recipe.id}}" method="post" class="form-group bg-dark text-center text-light">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <h1 class="text-warning">Edit recipe</h1>
+                    <label>Name of dish <input type="text" name="name" class="form-control"></label>
+                    <label>Description <input type="text" name="description" class="form-control"></label>
+                    <label>Instructions<input type="textarea" rows=" 30" cols="30" name="instructions" class="form-control"></label><br>
+                    <label> Date made <input type="date" name="date_made" class="form-control"></label><br>
+                    <label>Cooking time: Under 30 mins? <input type="text" name="cooking_time" class="form-control"></label><br>
+                    <input type="submit" value="Update recipe" class="btn btn-primary">
+                </form>
+                <div class="text-center bg-dark"><a href="/welcome"><input type="submit" value="Home" class="btn btn-warning"></a></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
